@@ -17,7 +17,7 @@ public class Strings {
 	}
 	
 	public  static String ipV4() {
-
+        String str = "jhj";
 		String regOctet = ipV4Octet(); 
 		return "((" + regOctet + ").){3}(" + regOctet + ")";
 	}
