@@ -17,8 +17,7 @@ public class Strings {
 	}
 	
 	public  static String ipV4() {
-//		return "(([0-9][0-9]?|[0-1]\\d\\d|[0-2][0-4]\\d|[0-2][0-5][0-5]).)"
-//				+ "{3}" + "(" + "[0-9][0-9]?|[0-1]\\d\\d|[0-2][0-4]\\d|[0-2][0-5][0-5]" + ")";
+
 		String regOctet = ipV4Octet(); 
 		return "((" + regOctet + ").){3}(" + regOctet + ")";
 	}

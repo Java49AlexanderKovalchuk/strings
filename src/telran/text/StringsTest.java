@@ -61,6 +61,7 @@ class StringsTest {
 	void zero_300Test() {
 		String regex = Strings.zero_300();
 		assertTrue("0".matches(regex));
+		assertTrue("12".matches(regex));
 		assertTrue("9".matches(regex));
 		assertTrue("299".matches(regex));
 		assertTrue("300".matches(regex));
