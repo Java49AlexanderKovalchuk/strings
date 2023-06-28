@@ -99,7 +99,7 @@ class StringsTest {
 	void ipV4Test() {
 		String regex = Strings.ipV4();
 		assertTrue("0.0.0.0".matches(regex));
-		assertTrue("1.1.1.100".matches(regex));
+		assertTrue("1.1.1.1".matches(regex));
 		assertTrue("99.99.12.09".matches(regex));
 		assertTrue("100.199.200.255".matches(regex));
 		assertFalse(".1.2.3.4".matches(regex));
@@ -107,7 +107,7 @@ class StringsTest {
 		assertFalse(".1.&2.3.4".matches(regex));
 		assertFalse("1.2.3".matches(regex));
 		assertFalse("1.2.3.4.5".matches(regex));
-		
+		assertFalse("123 123 123 123".matches(regex));
 	}
 
 }

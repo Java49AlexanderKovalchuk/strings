@@ -1,7 +1,5 @@
 package telran.text;
 
-import java.lang.module.ModuleDescriptor.Builder;
-
 public class Strings {
 
 	public static String javaVariableName() {
@@ -13,13 +11,12 @@ public class Strings {
 	}
 
 	public static String ipV4Octet() {
-		return "\\d\\d?|[0-1]\\d\\d|[0-2][0-4]\\d|[0-2][0-5][0-5]";
+		return "([01]?\\d\\d?|2([0-4]\\d|5[0-5]))";
 	}
 	
 	public  static String ipV4() {
-       
-		String regOctet = ipV4Octet(); 
-		return "((" + regOctet + ").){3}(" + regOctet + ")";
+       	String regOctet = ipV4Octet(); 
+		return String.format("(%s\\.){3}%s", ipV4Octet(), ipV4Octet());
 	}
 }
   
