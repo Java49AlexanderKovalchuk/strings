@@ -79,9 +79,6 @@ public class Strings {
 		if(!isArithmeticExpression(expression)) {
 			throw new IllegalArgumentException("Wrong arithmetic expression");
 		}
-//		if(mapVariables.values().size() == 0) {
-//			throw new NoSuchElementException();			
-//		}
 		
 		expression = expression.replaceAll("\\s+", "");
 		
