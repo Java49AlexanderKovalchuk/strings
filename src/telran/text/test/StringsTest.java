@@ -1,11 +1,23 @@
-package telran.text;
+package telran.text.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-class StringsTest {
+import telran.text.Strings;
 
+class StringsTest {
+	
+	static HashMap<String, Double> mapVariables = new HashMap();
+	static {
+		mapVariables.put("a", 3.0);
+		mapVariables.put("b", 2.0);
+	}
+	
 	@Test
 	void test() {
 		//String regex =  "gray|grey|griy";
@@ -109,5 +121,43 @@ class StringsTest {
 		assertFalse("1.2.3.4.5".matches(regex));
 		assertFalse("123 123 123 123".matches(regex));
 	}
-
+	@Test
+	void arithmeticExpressionTest() {
+		assertTrue(Strings.isArithmeticExpression(" 12 ")); //12
+		assertTrue(Strings.isArithmeticExpression(" a/ 6 ")); //2
+		assertTrue(Strings.isArithmeticExpression("12/b")); //6
+		assertTrue(Strings.isArithmeticExpression(" 12* 2 / 3 + 1000 ")); //1008
+		assertTrue(Strings.isArithmeticExpression(" 120 / 50 + 100 - 2 * 3 / 500 ")); //0
+		assertFalse(Strings.isArithmeticExpression(" 12 18"));
+		assertFalse(Strings.isArithmeticExpression(" 12/3&4"));
+		assertFalse(Strings.isArithmeticExpression(" 12+20-"));
+		assertFalse(Strings.isArithmeticExpression(" 12/ 18 + 100 10 "));
+	}
+	
+	//@Disabled
+	@Test
+		void computeExpressionTest() {
+		assertEquals(12, Strings.computeExpression(" 12 "));
+		assertEquals(2.4, Strings.computeExpression(" 12/ 5 "));
+		assertEquals(6, Strings.computeExpression("12/2 "));
+		assertEquals(1008, Strings.computeExpression(" 12* 2 / 3 + 1000 "));
+		assertEquals(102.4, Strings.computeExpression(" 120 / 50 + 100"));// - 2 * 3 / 3 "));
+		assertThrowsExactly(IllegalArgumentException.class, 
+				() -> Strings.computeExpression(" 12/ 18 + 100 10 "));
+	}
+	
+	@Test
+	void computeExpressionTest2() {
+		assertEquals(3.0, Strings.computeExpression("a", mapVariables));
+		assertEquals(12, Strings.computeExpression("12 ", mapVariables));
+		assertEquals(4, Strings.computeExpression("12 / 3 ", mapVariables));
+		assertEquals(1.0, Strings.computeExpression(" a - b ", mapVariables));
+		assertEquals(1.5, Strings.computeExpression(" a / 2 ", mapVariables));
+		assertEquals(10, Strings.computeExpression(" a - b * 10 ", mapVariables));
+		assertThrowsExactly(IllegalArgumentException.class, 
+				() -> Strings.computeExpression(" 12/ 18 + 100 10 "));
+		assertThrowsExactly(NoSuchElementException.class, 
+				() -> Strings.computeExpression("a - c", mapVariables));
+	}
+		
 }
